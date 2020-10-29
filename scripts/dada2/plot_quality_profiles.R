@@ -1,0 +1,13 @@
+
+message("loading dada2")
+suppressMessages( {
+  library(dada2); library(ggplot2)
+})
+
+message("making plots")
+plots <- purrr::map(snakemake@input, dada2::plotQualityProfile)
+
+message("saving plots")
+out <- purrr::map2(
+  snakemake@output,
+  plots, ggsave)
