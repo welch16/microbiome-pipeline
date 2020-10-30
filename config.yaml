@@ -1,0 +1,48 @@
+
+
+# This file should contain everything to configure the workflow on 
+# a global scale. In case of sample based data, it should be complemented by 
+# a samples.tsv file that contains one row per sample.
+
+# general parameters for run
+sampletable: "./samples.tsv"
+threads: 20
+
+# dada2 filter and trim
+truncQ: 2
+truncLen:
+  - 250
+  - 230
+trimLeft: 0
+trimRight: 0
+maxLen: Inf
+minLen: 20
+maxN: 0
+minQ: 0
+maxEE:
+  - 2
+  - 2
+
+# dada2 learn error rates
+learn_nbases: 100e6
+
+# dada2 merge pairs
+minOverlap: 20
+maxMismatch: 0
+
+# dada2 remove chimeras
+minSampleFraction: 0.9
+ignoreNNegatives: 1
+minFoldParentOverAbundance: 1.5
+allowOneOf: FALSE
+minOneOffParentDistance: 4
+maxShift: 16
+chimera_method: "consensus"
+
+max_length_variation: 7     # how many nucleotide can a sequence be longer or shorter than the mode sequence length
+
+# kraken_dbs:
+# idtaxa_dbs:
+# idtaxa_dbs: # can be downloaded from http://www2.decipher.codes/Downloads.html
+#   Silva: "taxonomy/SILVA_SSU_r138_2019.RData"
+#  GTDB: "/Users/silas/Desktop/WarmMicrobiota/TaxonmyDBs/GTDB_r86-mod_September2018.RData"
