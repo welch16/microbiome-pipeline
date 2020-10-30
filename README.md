@@ -87,4 +87,6 @@ Murali, A., Bhargava, A. & Wright, E.S. IDTAXA: a novel approach for accurate ta
 
 Wood, D., Lu, J., Langmead, B. Improved metagenomic analysis with Kraken 2. Genome Biology 20, 257 (2019). https://doi.org/10.1186/s13059-019-1891-0
 
+#### phyloseq
 
+McMurdie, P., Holmes, S. phyloseq: An R Package for Reproducible Interactive Analysis and Graphics of Microbiome Census Data. PLOS One 8, 4 (2013). https://doi.org/10.1371/journal.pone.0061217
