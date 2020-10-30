@@ -10,4 +10,4 @@ plots <- purrr::map(snakemake@input, dada2::plotQualityProfile)
 message("saving plots")
 out <- purrr::map2(
   snakemake@output,
-  plots, ggsave)
+  plots, ggsave, width = 5, height = 4, units = "in")
