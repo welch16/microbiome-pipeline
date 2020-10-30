@@ -31,6 +31,7 @@ rule all:
 rule clean:
   shell:
     """rm -r data/asv data/filtered data/stats data/model logs"""
+
 # rule all:
 #     input:
 #         "stats/Nreads_filtered.txt",

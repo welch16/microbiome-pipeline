@@ -72,7 +72,7 @@ seqtab <- dada2::makeSequenceTable(mergers)
 
 qs::qsave(seqtab, snakemake@output[["seqtab"]])
 
-message("summarizgin results")
+message("summarizing results")
 
 ## get N reads
 get_nreads <- function(x) sum(dada2::getUniques(x))
