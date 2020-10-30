@@ -1,8 +1,8 @@
 
 message("loading dada2")
-suppressMessages( {
-  library(dada2); library(ggplot2)
-})
+
+library(dada2)
+library(ggplot2)
 
 message("making plots")
 plots <- purrr::map(snakemake@input, dada2::plotQualityProfile)

@@ -14,10 +14,12 @@ sink(snakemake@log[[1]])
 
 
 message(stringr::str_c(names(info), " : ", info, "\n"))
+print(stringr::str_c(names(info), " : ", info, "\n"))
 
 message("loading packages")
 library(magrittr)
 library(dada2)
+library(qs)
 
 
 filter_fwd <- snakemake@input[["R1"]]

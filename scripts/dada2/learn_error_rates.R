@@ -10,10 +10,13 @@ sink(snakemake@log[[1]])
 
 info <- Sys.info();
 message(stringr::str_c(names(info), " : ", info, "\n"))
+print(stringr::str_c(names(info), " : ", info, "\n"))
 
 message("loading packages")
 library(dada2)
 library(ggplot2)
+library(qs)
+
 
 err_fwd <- dada2::learnErrors(
   snakemake@input[["R1"]], nbases = snakemake@config[["learn_nbases"]],

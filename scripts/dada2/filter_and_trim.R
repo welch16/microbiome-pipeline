@@ -10,8 +10,11 @@ info <- Sys.info();
 message("loading dada2")
 library(magrittr)
 library(dada2)
+library(qs)
+
 
 message(stringr::str_c(names(info), " : ", info, "\n"))
+print(stringr::str_c(names(info), " : ", info, "\n"))
 track.filt <- dada2::filterAndTrim(
   snakemake@input[["R1"]], snakemake@output[["R1"]],
   snakemake@input[["R2"]], snakemake@output[["R2"]],
