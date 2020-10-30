@@ -80,4 +80,11 @@ You can test the pipeline with the script `test.py`. -->
 Callahan, B., McMurdie, P., Rosen, M. et al. DADA2: High-resolution sample inference from Illumina amplicon data. Nat Methods 13, 581–583 (2016). https://doi.org/10.1038/nmeth.3869
 
 #### IDtaxa:
+
 Murali, A., Bhargava, A. & Wright, E.S. IDTAXA: a novel approach for accurate taxonomic classification of microbiome sequences. Microbiome 6, 140 (2018). https://doi.org/10.1186/s40168-018-0521-5
+
+#### Kraken2:
+
+Wood, D., Lu, J., Langmead, B. Improved metagenomic analysis with Kraken 2. Genome Biology 20, 257 (2019). https://doi.org/10.1186/s13059-019-1891-0
+
+

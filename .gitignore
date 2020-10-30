@@ -1,1 +1,5 @@
+.snakemake/
 data/
+figures/
+logs/
+*tsv
