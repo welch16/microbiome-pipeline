@@ -41,8 +41,25 @@ chimera_method: "consensus"
 
 max_length_variation: 7     # how many nucleotide can a sequence be longer or shorter than the mode sequence length
 
-# kraken_dbs:
-# idtaxa_dbs:
+# can be downloaded from https://benlangmead.github.io/aws-indexes/k2
+kraken_dbs: 
+  minikraken2: "taxonomy/minikraken2_v2_8GB_201904_UPDATE/"
+  greengenes: "taxonomy/16S_Greengenes_k2db"
+  # rdp: "taxonomy/16S_RDP11.5_20200326"
+  # silva: "taxonomy/16S_Silva132_20200326"
+
+
+# According to this issue:
+# https://github.com/DerrickWood/kraken2/issues/167  
+
+# For general purposes, 0.05 or 0.1 for general purposes.
+# If the classification of ASVs / OTUs of reads < 10 is important, then use
+# something higher, e.g. 0.5 
+confidence: 0.01
+
+
+
+    # idtaxa_dbs:
 # idtaxa_dbs: # can be downloaded from http://www2.decipher.codes/Downloads.html
 #   Silva: "taxonomy/SILVA_SSU_r138_2019.RData"
 #  GTDB: "/Users/silas/Desktop/WarmMicrobiota/TaxonmyDBs/GTDB_r86-mod_September2018.RData"

@@ -5,15 +5,23 @@
 <!-- [![Build Status](https://travis-ci.org/snakemake-workflows/amplicon-seq-dada2.svg?branch=master)](https://travis-ci.org/snakemake-workflows/amplicon-seq-dada2) -->
 
 
-<!-- This workflow is an implementation of the popular DADA2 tool. I followed the steps in the [Tutorial](https://benjjneb.github.io/dada2/tutorial.html). I use IDtaxa for taxonomic annotation.
+This workflow is an implementation of the popular DADA2 tool. I followed the steps in the [Tutorial](https://benjjneb.github.io/dada2/tutorial.html). I use IDtaxa for taxonomic annotation.
 
 ![dada2](https://benjjneb.github.io/dada2/images/DADA2_Logo_Text_1_14_640px.png)
 
-
+The pipeline was inspired by the [dada2 snakemake pipeline by Silas Kieser (@silask)](https://github.com/SilasK/16S-dada2).
 
 ## Authors
 
-* Silas Kieser (@silask) -->
+*  Rene Welch (@welch16)
+
+## Usage
+
+* `snakemake -j{cores} all_profile` to plot the quality profiles
+* `snakemake -j{cores}` to run the dada2 pipeline
+* `snakemake -j{cores} all_taxonomy_kraken` to labels the ASV sequences with [kraken2](https://ccb.jhu.edu/software/kraken2/). Databases need to be downloaded from https://benlangmead.github.io/aws-indexes/k2
+
+
 
 <!-- ## Usage
 
@@ -79,10 +87,6 @@ You can test the pipeline with the script `test.py`. -->
 
 Callahan, B., McMurdie, P., Rosen, M. et al. DADA2: High-resolution sample inference from Illumina amplicon data. Nat Methods 13, 581–583 (2016). https://doi.org/10.1038/nmeth.3869
 
-#### IDtaxa:
-
-Murali, A., Bhargava, A. & Wright, E.S. IDTAXA: a novel approach for accurate taxonomic classification of microbiome sequences. Microbiome 6, 140 (2018). https://doi.org/10.1186/s40168-018-0521-5
-
 #### Kraken2:
 
 Wood, D., Lu, J., Langmead, B. Improved metagenomic analysis with Kraken 2. Genome Biology 20, 257 (2019). https://doi.org/10.1186/s13059-019-1891-0
@@ -90,3 +94,7 @@ Wood, D., Lu, J., Langmead, B. Improved metagenomic analysis with Kraken 2. Geno
 #### phyloseq
 
 McMurdie, P., Holmes, S. phyloseq: An R Package for Reproducible Interactive Analysis and Graphics of Microbiome Census Data. PLOS One 8, 4 (2013). https://doi.org/10.1371/journal.pone.0061217
+
+<!-- #### IDtaxa:
+
+Murali, A., Bhargava, A. & Wright, E.S. IDTAXA: a novel approach for accurate taxonomic classification of microbiome sequences. Microbiome 6, 140 (2018). https://doi.org/10.1186/s40168-018-0521-5 -->

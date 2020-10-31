@@ -32,8 +32,8 @@ seqtab <- dada2::removeBimeraDenovo(
 
 qs::qsave(seqtab, snakemake@output[["asvs"]])
 
-track <- rowSums(seqtab)
-names(track) <- row.names(seqtab)
+out <- tibble::tibble(samples = row.names(seqtab),
+  nonchim = rowSums(seqtab))
 
-write.table(track, col.names = c("nonchim"),
-            snakemake@output[["nreads"]], sep = "\t")
+out %>%
+  readr::write_tsv(snakemake@output[["nreads"]])

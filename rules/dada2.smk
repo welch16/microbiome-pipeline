@@ -19,7 +19,7 @@ rule filter_and_trim:
   output:
     R1 = expand("data/filtered/{sample}_R1.fastq.gz",sample=SAMPLES),
     R2 = expand("data/filtered/{sample}_R2.fastq.gz",sample=SAMPLES),
-    nreads = "data/stats/Nreads_filtered.txt"
+    nreads = temp("data/stats/Nreads_filtered.txt")
   params:
     samples = SAMPLES
   threads:
@@ -77,7 +77,7 @@ rule remove_chimeras:
     seqtab = rules.dereplicate.output.seqtab
   output:
     asvs = "data/asv/seqtab_nochimeras.qs",
-    nreads=temp("data/stats/Nreads_chimera_removed.txt")
+    nreads = temp("data/stats/Nreads_chimera_removed.txt")
   threads:
     config['threads']
   # conda:
@@ -87,6 +87,19 @@ rule remove_chimeras:
   script:
     "../scripts/dada2/remove_chimeras.R"
 
+rule stats:
+  input:
+    nreads_filtered = "data/stats/Nreads_filtered.txt",
+    nreads_dereplicated = "data/stats/Nreads_dereplicated.txt",
+    nreads_chim_removed = "data/stats/Nreads_chimera_removed.txt"
+  output:
+    nreads = "data/stats/Nreads_dada2.txt",
+    fig_step = "figures/qc/dada2steps_vs_abundance.png",
+    fig_step_rel = "figures/qc/dada2steps_vs_relabundance.png",
+  log:
+    "logs/dada2/summarize_stats.txt"
+  script:
+    "../scripts/dada2/summarize_nreads.R"
 
 # rule filterLength:
 #     input:

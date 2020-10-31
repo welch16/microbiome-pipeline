@@ -23,14 +23,30 @@ rule all:
   input:
     "data/model/error_rates_R1.qs",
     "data/model/error_rates_R2.qs",
-    "data/stats/Nreads_filtered.txt",
-    "data/stats/Nreads_dereplicated.txt",
-    "data/stats/Nreads_chimera_removed.txt",
+    "data/stats/Nreads_dada2.txt",
     "data/asv/seqtab_nochimeras.qs"
 
+rule all_profile:
+    input: expand("figures/quality_profiles/{direction}/{sample}_{direction}.png",sample=SAMPLES,direction=['R1','R2'])
+
+rule all_taxonomy_kraken:
+  input:
+    "data/fasta/asv_sequences.fa",
+    "data/taxonomy/kraken_minikraken2.out",
+    "data/taxonomy/kraken_minikraken2.summary",
+    "data/taxonomy/kraken_minikraken2_labels.qs",
+    "data/taxonomy/kraken_minikraken2_labels.tsv",
+    "data/taxonomy/kraken_minikraken2_summary.tsv",
+    "data/taxonomy/kraken_greengenes.out",
+    "data/taxonomy/kraken_greengenes.summary",
+    "data/taxonomy/kraken_greengenes_labels.qs",
+    "data/taxonomy/kraken_greengenes_labels.tsv",
+    "data/taxonomy/kraken_greengenes_summary.tsv"    
+    
 rule clean:
   shell:
-    """rm -r data/asv data/filtered data/stats data/model logs"""
+    """rm -r data/asv data/filtered data/stats data/model \
+        data/fasta data/taxonomy logs"""
 
 # rule all:
 #     input:
@@ -52,8 +68,6 @@ rule clean:
 #         "taxonomy/otu_tree.nwk",
 
 
-rule all_profile:
-    input: expand("figures/quality_profiles/{direction}/{sample}_{direction}.png",sample=SAMPLES,direction=['R1','R2'])
 
 
 # rule all_filtered:
@@ -89,8 +103,5 @@ rule all_profile:
 
 
 
-
-
-
 include: "rules/dada2.smk"
-# include: "rules/taxonomy.smk"
+include: "rules/taxonomy.smk"
