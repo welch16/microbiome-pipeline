@@ -31,7 +31,7 @@ track.filt <- dada2::filterAndTrim(
   maxEE =     snakemake@config[["maxEE"]],
   rm.phix = TRUE,
   compress = TRUE,
-  multithread = TRUE)
+  multithread = snakemake@threads)
 
 row.names(track.filt) <- snakemake@params[["samples"]]
 colnames(track.filt) <- c("raw", "filtered")

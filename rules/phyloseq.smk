@@ -33,3 +33,16 @@ rule alpha_div:
     "logs/phyloseq/alphadiv.txt"
   script:
     "../scripts/phyloseq/compute_alphadiv.R"
+
+rule beta_div:
+  input:
+    phyloseq="data/phyloseq/asv_phyloseq.qs"
+  output:
+    distance="data/phyloseq/div/beta_distance.qs",
+    pcoa = "data/phyloseq/div/betadiv.qs"
+  threads:
+    config["threads"]
+  log:
+    "logs/phyloseq/betadiv.txt"
+  script:
+    "../scripts/phyloseq/compute_betadiv.R"

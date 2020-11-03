@@ -55,4 +55,8 @@ kraken_dbs:
 # something higher, e.g. 0.5 
 confidence: 0.01
 
-# phyloseq
+# phyloseq 
+# any of c("bray", "fJaccard", "euclidean",
+  # "hellinger", "mahalanobis", "manhattan", "bhjattacharyya", "canberra",
+  # "chord", "unifrac", "w_unifrac", "w_unifrac_norm")
+beta: "bray"

@@ -3,7 +3,7 @@ import pandas as pd
 
 configfile: "config.yaml"
 
-SampleTable = pd.read_table(config['sampletable'],index_col=0)
+SampleTable = pd.read_table(config['sampletable'], index_col=0)
 SAMPLES = list(SampleTable.index)
 
 JAVA_MEM_FRACTION=0.85
@@ -38,7 +38,8 @@ rule all_taxonomy_kraken:
 rule all_phyloseq:
   input:
     "data/phyloseq/asv_phyloseq.qs",
-    "data/phyloseq/div/alphadiv.qs"
+    "data/phyloseq/div/alphadiv.qs",
+    "data/phyloseq/div/betadiv.qs"
     # "data/phyloseq/div/unifrac_dist.qs"
 
 
