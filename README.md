@@ -45,7 +45,7 @@ to install all the R libraries used in the pipeline
 * `snakemake -j{cores} all_profile` to plot the quality profiles
 * `snakemake -j{cores}` to run the dada2 pipeline
 * `snakemake -j{cores} all_taxonomy_kraken` to labels the ASV sequences with [kraken2](https://ccb.jhu.edu/software/kraken2/). Databases need to be downloaded from https://benlangmead.github.io/aws-indexes/k2
-* `snakemake
+* `snakemake -j{cores} all_phyloseq` to perform the generate a `phyloseq` object, align sequences and compute the alpha / beta diversities
 
 
 <!-- ## Usage
