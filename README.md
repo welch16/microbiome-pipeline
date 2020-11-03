@@ -9,7 +9,7 @@ This workflow is an implementation of the popular DADA2 tool. I followed the ste
 
 ![dada2](https://benjjneb.github.io/dada2/images/DADA2_Logo_Text_1_14_640px.png)
 
-The pipeline was inspired by the [dada2 snakemake pipeline by Silas Kieser (@silask)](https://github.com/SilasK/16S-dada2).
+The pipeline was inspired by the [Silas Kieser (@silask)'s dada2 snakemake pipeline](https://github.com/SilasK/16S-dada2).
 
 ## Authors
 
