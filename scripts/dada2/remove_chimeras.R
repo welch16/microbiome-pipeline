@@ -1,5 +1,5 @@
 ## merges different ASV tables, and removes chimeras
-
+source("renv/activate.R")
 
 sink(snakemake@log[[1]])
 
@@ -7,8 +7,7 @@ info <- Sys.info();
 message(stringr::str_c(names(info), " : ", info, "\n"))
 print(stringr::str_c(names(info), " : ", info, "\n"))
 
-message("loading package")
-
+message("loading packages")
 library(magrittr)
 library(dada2)
 library(qs)

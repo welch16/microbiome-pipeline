@@ -32,21 +32,20 @@ rule all_profile:
 rule all_taxonomy_kraken:
   input:
     "data/fasta/asv_sequences.fa",
-    "data/taxonomy/kraken_minikraken2.out",
-    "data/taxonomy/kraken_minikraken2.summary",
     "data/taxonomy/kraken_minikraken2_labels.qs",
-    "data/taxonomy/kraken_minikraken2_labels.tsv",
-    "data/taxonomy/kraken_minikraken2_summary.tsv",
-    "data/taxonomy/kraken_greengenes.out",
-    "data/taxonomy/kraken_greengenes.summary",
-    "data/taxonomy/kraken_greengenes_labels.qs",
-    "data/taxonomy/kraken_greengenes_labels.tsv",
-    "data/taxonomy/kraken_greengenes_summary.tsv"    
+    "data/taxonomy/kraken_greengenes_labels.qs"
     
+rule all_phyloseq:
+  input:
+    "data/phyloseq/asv_phyloseq.qs",
+    "data/phyloseq/div/alphadiv.qs"
+    # "data/phyloseq/div/unifrac_dist.qs"
+
+
 rule clean:
   shell:
     """rm -r data/asv data/filtered data/stats data/model \
-        data/fasta data/taxonomy logs"""
+        data/fasta data/taxonomy data/phyloseq logs"""
 
 # rule all:
 #     input:
@@ -105,3 +104,4 @@ rule clean:
 
 include: "rules/dada2.smk"
 include: "rules/taxonomy.smk"
+include: "rules/phyloseq.smk"

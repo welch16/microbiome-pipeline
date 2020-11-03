@@ -1,6 +1,5 @@
 # An example collection of Snakemake rules imported in the main Snakefile.
 
-
 rule plot_quality_profiles:
   input:
     lambda wc: SampleTable[wc.direction].values

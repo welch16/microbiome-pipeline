@@ -3,6 +3,6 @@ channels:
   - bioconda
   - defaults
 dependencies:
-  - python=3.6
+  - python=3.8
   - snakemake=5.24
   - r-base=4.0.2

@@ -1,6 +1,6 @@
 
+source("renv/activate.R")
 message("loading dada2")
-
 library(dada2)
 library(ggplot2)
 

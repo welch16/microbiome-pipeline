@@ -33,7 +33,8 @@ rule kraken_taxonomy:
       --unclassified-out {output.unclassified} {input.fasta}
     """
 
-localrules: parse_kraken
+localrules:
+  parse_kraken
 
 rule parse_kraken:
   input:
@@ -48,19 +49,3 @@ rule parse_kraken:
     "logs/taxonomy/parse_kraken2_{ref}.txt"
   script:
     "../scripts/taxonomy/parse_kraken.R"
-  # script:
-  #   "../scripts/taxonomy/parse_kraken.R"
-
-# rule IDtaxa:
-#     input:
-#         seqtab= "output/seqtab.rds",
-#         ref= lambda wc: config['idtaxa_dbs'][wc.ref]
-#     output:
-#         taxonomy= "taxonomy/{ref}.tsv",
-#     threads:
-#         config['threads']
-#     log:
-#         "logs/dada2/IDtaxa_{ref}.txt"
-#     script:
-#         "../scripts/dada2/IDtaxa.R"
-

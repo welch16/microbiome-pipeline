@@ -1,11 +1,11 @@
 # Summarize numbers of reads per step, makes some plots
+source("renv/activate.R")
 
 sink(snakemake@log[[1]])
 info <- Sys.info();
 
 message(stringr::str_c(names(info), " : ", info, "\n"))
 print(stringr::str_c(names(info), " : ", info, "\n"))
-
 
 message("loading packages")
 library(magrittr)

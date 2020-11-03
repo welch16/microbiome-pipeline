@@ -1,3 +1,4 @@
+source("renv/activate.R")
 
 sink(snakemake@log[[1]])
 info <- Sys.info();

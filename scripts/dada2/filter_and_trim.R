@@ -3,6 +3,8 @@
 #  Assumes that we have paired end files,
 #  and that the parameters for dada2 are stored in a json file.
 #
+source("renv/activate.R")
+
 
 sink(snakemake@log[[1]])
 info <- Sys.info();

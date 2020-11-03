@@ -4,8 +4,7 @@
 # Assumes that we have paired end files, therefore, we learn two error rates
 # matrices, i.e. one for each end.
 #
-
-
+source("renv/activate.R")
 sink(snakemake@log[[1]])
 
 info <- Sys.info();

@@ -7,7 +7,7 @@
 # * dada2::dada
 # * dada2::mergePairs
 # * dada2::makeSequenceTable
-
+source("renv/activate.R")
 info <- Sys.info();
 
 sink(snakemake@log[[1]])
