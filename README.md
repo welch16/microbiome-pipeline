@@ -5,7 +5,7 @@
 <!-- [![Build Status](https://travis-ci.org/snakemake-workflows/amplicon-seq-dada2.svg?branch=master)](https://travis-ci.org/snakemake-workflows/amplicon-seq-dada2) -->
 
 
-This workflow is an implementation of the popular DADA2 tool. I followed the steps in the [Tutorial](https://benjjneb.github.io/dada2/tutorial.html). Instead of using IDTaxa for the sequence classification, I utilized [Kraken2](https://ccb.jhu.edu/software/kraken2/).
+This workflow is an implementation of the popular DADA2 tool. I followed the steps in the [Tutorial](https://benjjneb.github.io/dada2/tutorial.html). I utilized [Kraken2](https://ccb.jhu.edu/software/kraken2/) for ASV sequence classification instead of IDTaxa.
 
 ![dada2](https://benjjneb.github.io/dada2/images/DADA2_Logo_Text_1_14_640px.png)
 
@@ -45,8 +45,7 @@ to install all the R libraries used in the pipeline
 * `snakemake -j{cores} all_profile` to plot the quality profiles
 * `snakemake -j{cores}` to run the dada2 pipeline
 * `snakemake -j{cores} all_taxonomy_kraken` to labels the ASV sequences with [kraken2](https://ccb.jhu.edu/software/kraken2/). Databases need to be downloaded from https://benlangmead.github.io/aws-indexes/k2
-* `snakemake -j{cores} all_phyloseq` to perform the generate a `phyloseq` object, align sequences and compute the alpha / beta diversities
-
+* `snakemake -j{cores} all_phyloseq` to perform the generate a `phyloseq` object, align sequences and compute the alpha / beta diversities. This step is not stable yet, but alternatively a good ending point could be `snakemake -j{cores} init_phyloseq`
 
 ## Cite
 
