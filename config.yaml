@@ -6,7 +6,10 @@
 
 # general parameters for run
 sampletable: "./samples.tsv"
+negcontroltable: "./negcontrols.tsv"
+
 threads: 32
+
 
 # dada2 filter and trim
 truncQ: 12
@@ -40,10 +43,9 @@ maxShift: 16
 chimera_method: "consensus"
 
 # qc parameters
-
-max_length_variation: 7 # how many nucleotide can a sequence be longer or shorter than the mode sequence length
-negctrl_prop: 0.5
-total_abundance_prop: 0.00001
+negctrl_prop: 0.5 # proportion of negative control reads to be subtracted from sample reads vectors
+max_length_variation: 50 # bps can a sequence be longer or shorter than the mode sequence length
+low_abundance_perc: 0.0001 # min percentage of total_reads in an ASV
 
 
 # can be downloaded from https://benlangmead.github.io/aws-indexes/k2

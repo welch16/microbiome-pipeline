@@ -32,8 +32,7 @@ rule all_profile:
 rule all_taxonomy_kraken:
   input:
     "data/fasta/asv_sequences.fa",
-    "data/taxonomy/kraken_minikraken2_labels.qs",
-    "data/taxonomy/kraken_greengenes_labels.qs"
+    "data/taxonomy/kraken_minikraken2_labels.qs"
     
 rule all_phyloseq:
   input:
