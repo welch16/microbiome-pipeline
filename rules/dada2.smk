@@ -76,7 +76,7 @@ rule remove_chimeras:
     seqtab = rules.dereplicate.output.seqtab
   output:
     asvs = temp("data/asv/seqtab_nochimeras.qs"),
-    nreads = temp("data/stats/Nreads_chimera_removed.txt")
+    nreads = "data/stats/Nreads_chimera_removed.txt"
   threads:
     config["threads"]
   # conda:

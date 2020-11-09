@@ -16,13 +16,9 @@ library(tidyverse)
 library(dada2)
 library(qs)
 
-
 message("starting with asvs in ", snakemake@input[["seqtab"]])
 
 seqtab <- qs::qread(snakemake@input[["seqtab"]])
-
-# seqtab <- qs::qread("/z/Comp/onglab/Projects/WISC/results/rwelch/2020_11_03_reprocess_dust/microbiome-pipeline/data/asv/seqtab_nochimeras.qs")
-
 
 message("filtering samples by negative controls")
 message("using neg. control file ", snakemake@input[["negcontrol"]])
@@ -30,20 +26,17 @@ message("removing counts >= ", snakemake@config[["negctrl_prop"]],
   " sum(neg_controls)")
 neg_controls <- readr::read_tsv(snakemake@input[["negcontrol"]])
 
-# neg_controls <- readr::read_tsv("/z/Comp/onglab/Projects/WISC/results/rwelch/2020_11_03_reprocess_dust/microbiome-pipeline/negcontrols.tsv")
-
 neg_controls %<>%
   tidyr::nest(negs = c(neg_control))
 
 subtract_neg_control <- function(name, neg_controls, seqtab, prop) {
 
-  # prop <- 0.5
   negs <- neg_controls %>%
     dplyr::pull(neg_control)
 
   negs <- negs[negs %in% rownames(seqtab)]
   out_vec <- seqtab[name, ]
-  
+
   if (length(negs) > 1) {
 
     negs <- seqtab[negs, ]
@@ -56,7 +49,6 @@ subtract_neg_control <- function(name, neg_controls, seqtab, prop) {
     out_vec <- out_vec - prop * neg_vec
   }
 
-  
   if (any(out_vec < 0)) {
     out_vec[out_vec < 0] <- 0
   }
@@ -64,7 +56,6 @@ subtract_neg_control <- function(name, neg_controls, seqtab, prop) {
 
 }
 
-# debugonce(subtract_neg_control)
 neg_controls %<>%
   dplyr::mutate(sample_vec = purrr::map2(name, negs, subtract_neg_control,
     seqtab, snakemake@config[["negctrl_prop"]]))
@@ -91,8 +82,8 @@ l_hist <- as.data.frame(table(seq_lengths)) %>%
   rlang::set_names("length", "freq")
 
 l_hist <- l_hist %>%
-  ggplot(aes(x = length,y = freq)) + 
-    geom_col() + 
+  ggplot(aes(x = length, y = freq)) +
+    geom_col() +
     labs(title = "Sequence Lengths by SEQ Count") +
     theme_bw() +
     theme(
@@ -115,16 +106,15 @@ most_common_length <- dplyr::top_n(table2, 1, abundance) %>%
   dplyr::pull(seq_length) %>%
   as.numeric()
 
-
-table2 %<>%
-  ggplot(aes(x = seq_length, y = abundance)) + 
-    geom_col() + 
+table2 <- table2 %>%
+  ggplot(aes(x = seq_length, y = log1p(abundance))) +
+    geom_col() +
     labs(title = "Sequence Lengths by SEQ Abundance") +
     theme_bw() +
     theme(
-      axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5, size = 10),
-      axis.text.y = element_text(size = 10)) +
-    scale_y_log10()
+      axis.text.x = element_text(angle = 90, hjust = 1,
+        vjust = 0.5, size = 10),
+      axis.text.y = element_text(size = 10))
 
 ggsave(
   filename = snakemake@output[["plot_seqabundance"]],
@@ -133,7 +123,6 @@ ggsave(
 
 
 max_diff <- snakemake@config[['max_length_variation']]
-# max_diff <- 50
 
 message("most common length: ", most_common_length)
 message("removing sequences outside range ",
@@ -147,7 +136,6 @@ seqtab_new <- seqtab_new[, right_length]
 total_abundance <- sum(colSums(seqtab_new))
 min_reads_per_asv <- ceiling(snakemake@config[["low_abundance_perc"]] / 100 *
   total_abundance)
-# min_reads_per_asv <- ceiling(0.0001 / 100 * total_abundance)
 
 seqtab_abundance <- colSums(seqtab_new)
 
@@ -158,4 +146,3 @@ seqtab_new <- seqtab_new[ ,seqtab_abundance >= min_reads_per_asv]
 
 message("saving files in ", snakemake@output[["seqtab_filt"]])
 qs::qsave(seqtab_new, snakemake@output[["seqtab_filt"]])
-
