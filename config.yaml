@@ -5,8 +5,8 @@
 # a samples.tsv file that contains one row per sample.
 
 # general parameters for run
-sampletable: "./samples.tsv"
-negcontroltable: "./negcontrols.tsv"
+sampletable: "samples.tsv"
+negcontroltable: "negcontrols.tsv"
 
 threads: 32
 

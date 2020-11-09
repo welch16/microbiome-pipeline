@@ -24,7 +24,7 @@ rule all:
     "data/model/error_rates_R1.qs",
     "data/model/error_rates_R2.qs",
     "data/stats/Nreads_dada2.txt",
-    "data/asv/seqtab_nochimeras.qs"
+    "data/asv/seqtab_nochimeras_qc.qs"
 
 rule all_profile:
     input: expand("figures/quality_profiles/{direction}/{sample}_{direction}.png",sample=SAMPLES,direction=['R1','R2'])
