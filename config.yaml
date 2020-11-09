@@ -6,17 +6,17 @@
 
 # general parameters for run
 sampletable: "./samples.tsv"
-threads: 20
+threads: 32
 
 # dada2 filter and trim
-truncQ: 2
+truncQ: 12
 truncLen:
+  - 280
   - 250
-  - 230
 trimLeft: 0
 trimRight: 0
 maxLen: Inf
-minLen: 20
+minLen: 100
 maxN: 0
 minQ: 0
 maxEE:
@@ -27,7 +27,7 @@ maxEE:
 learn_nbases: 100e6
 
 # dada2 merge pairs
-minOverlap: 20
+minOverlap: 50
 maxMismatch: 0
 
 # dada2 remove chimeras
@@ -39,7 +39,12 @@ minOneOffParentDistance: 4
 maxShift: 16
 chimera_method: "consensus"
 
-max_length_variation: 7     # how many nucleotide can a sequence be longer or shorter than the mode sequence length
+# qc parameters
+
+max_length_variation: 7 # how many nucleotide can a sequence be longer or shorter than the mode sequence length
+negctrl_prop: 0.5
+total_abundance_prop: 0.00001
+
 
 # can be downloaded from https://benlangmead.github.io/aws-indexes/k2
 kraken_dbs: 

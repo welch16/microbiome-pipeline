@@ -14,8 +14,8 @@ rule phylo_tree:
 rule init_phyloseq:
   input:
     asv="data/asv/seqtab_nochimeras.qs",
-    taxa="data/taxonomy/kraken_minikraken2_labels.qs",
-    tree="data/phyloseq/tree.nwk"
+    taxa="data/taxonomy/kraken_minikraken2_labels.qs"
+    # tree="data/phyloseq/tree.nwk"
   output:
     sequences="data/phyloseq/asv_sequences.qs",
     phyloseq="data/phyloseq/asv_phyloseq.qs"

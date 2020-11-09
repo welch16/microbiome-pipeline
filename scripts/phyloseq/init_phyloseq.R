@@ -15,7 +15,9 @@ library(qs)
 message("loading data")
 asv_table <- qs::qread(snakemake@input[["asv"]])
 taxa <- qs::qread(snakemake@input[["taxa"]])
-tree <- ape::read.tree(snakemake@input[["tree"]])
+# tree <- ape::read.tree(snakemake@input[["tree"]])
+
+tree <- NULL
 
 message("using asv_table in ", snakemake@input[["asv"]])
 message("using taxa in ", snakemake@input[["taxa"]])
