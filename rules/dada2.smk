@@ -62,7 +62,7 @@ rule dereplicate:
   params:
     samples = SAMPLES
   threads:
-    config['threads']
+    config["threads"]
   log:
     "logs/dada2/dereplicate.txt"
   script:
@@ -75,16 +75,27 @@ rule remove_chimeras:
   input:
     seqtab = rules.dereplicate.output.seqtab
   output:
-    asvs = "data/asv/seqtab_nochimeras.qs",
+    asvs = temp("data/asv/seqtab_nochimeras.qs"),
     nreads = temp("data/stats/Nreads_chimera_removed.txt")
   threads:
-    config['threads']
+    config["threads"]
   # conda:
   #       "../envs/dada2.yaml"
   log:
     "logs/dada2/remove_chimeras.txt"
   script:
     "../scripts/dada2/remove_chimeras.R"
+
+rule filter_asvs:
+  input:
+    seqtab = rules.remove_chimeras.output.asvs,
+    negcontrols = config["negcontroltable"]
+  output:
+    plot_seqlength = "figures/qc/nasvs_by_seqlength.png",
+    plot_seqabundance = "figures/qc/nasvs_by_seqabundance.png",
+    seqtab_filt = "data/asv/seqtab_nochimeras_qc.qs"
+  script:
+    "../scripts/dada2/filter_asvs.R"
 
 rule stats:
   input:
@@ -126,7 +137,7 @@ rule stats:
 #     output:
 #         taxonomy= "taxonomy/{ref}.tsv",
 #     threads:
-#         config['threads']
+#         config["threads"]
 #     log:
 #         "logs/dada2/IDtaxa_{ref}.txt"
 #     script:

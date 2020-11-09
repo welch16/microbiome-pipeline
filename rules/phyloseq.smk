@@ -1,7 +1,7 @@
 
 rule phylo_tree:
   input:
-    asv="data/asv/seqtab_nochimeras.qs"
+    asv="data/asv/seqtab_nochimeras_qc.qs"
   output:
     alignment="data/fasta/sequence_alignment.fa",
     tree="data/phyloseq/tree.nwk"
@@ -13,7 +13,7 @@ rule phylo_tree:
 
 rule init_phyloseq:
   input:
-    asv="data/asv/seqtab_nochimeras.qs",
+    asv="data/asv/seqtab_nochimeras_qc.qs",
     taxa="data/taxonomy/kraken_minikraken2_labels.qs",
     tree="data/phyloseq/tree.nwk"
   output:
