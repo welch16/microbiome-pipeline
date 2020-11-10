@@ -65,6 +65,15 @@ if (is.null(taxa) & is.null(tree)) {
 
 }
 
+meta <- readr::read_tsv(snakemake@input[["meta"]])
+
+meta %<>%
+  as.data.frame() %>%
+  tibble::column_to_rownames("sample")
+
+sample_data(ps) <- meta
+
+
 message("saving sequences in ", snakemake@output[["sequences"]])
 seqs %>% qs::qsave(snakemake@output[["sequences"]])
 

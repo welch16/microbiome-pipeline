@@ -37,15 +37,19 @@ rule all_taxonomy_kraken:
 rule all_phyloseq:
   input:
     "data/phyloseq/asv_phyloseq.qs",
-    "data/phyloseq/div/alphadiv.qs",
-    "data/phyloseq/div/betadiv.qs"
+    "data/phyloseq/asv_phyloseq_norm.qs",
+    "data/phyloseq/div/alphadiv.qs"
+    # "data/phyloseq/div/betadiv.qs"
     # "data/phyloseq/div/unifrac_dist.qs"
-
 
 rule clean:
   shell:
     """rm -r data/asv data/filtered data/stats data/model \
         data/fasta data/taxonomy data/phyloseq logs"""
+
+rule clean_phyloseq:
+  shell:
+    """rm -r data/phyloseq"""
 
 # rule all:
 #     input:
