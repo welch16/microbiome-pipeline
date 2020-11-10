@@ -25,7 +25,7 @@ divs <- c("observed", "chao1", "diversity_inverse_simpson",
   "rarity_log_modulo_skewness", "rarity_low_abundance", 
   "rarity_rare_abundance", "dominance_dbp", "dominance_dmn",
   "dominance_absolute", "dominance_relative", "dominance_simpson",
-  "dominance_core_abundance", "dominance_gini")
+  "dominance_core_abundance")
 
 
 suppressMessages({
