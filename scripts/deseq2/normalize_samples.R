@@ -15,8 +15,10 @@ message("loading data")
 
 ps <- qs::qread(snakemake@input[["phyloseq"]])
 
-deseq <- phyloseq::phyloseq_to_deseq2(ps, design = ~ 1)
 
+deseq <- phyloseq::phyloseq_to_deseq2(ps, design = ~ 1)
+message("removing empty samples (if there is any)")
+deseq <- deseq[, colSums(assay(deseq)) > 0] # removing empty samples if any
 deseq <- DESeq2::estimateSizeFactors(deseq, type = "poscounts")
 deseq_norm <- BiocGenerics::counts(deseq, normalized = TRUE)
 
