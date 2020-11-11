@@ -6,3 +6,4 @@ dependencies:
   - python=3.8
   - snakemake=5.24
   - r-base=4.0.2
+  - kraken2=2.0.7-beta
