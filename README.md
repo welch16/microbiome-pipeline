@@ -47,6 +47,9 @@ to install all the R libraries used in the pipeline
 * `snakemake -j{cores} all_taxonomy_kraken` to labels the ASV sequences with [kraken2](https://ccb.jhu.edu/software/kraken2/). Databases need to be downloaded from https://benlangmead.github.io/aws-indexes/k2
 * `snakemake -j{cores} all_phyloseq` to perform the generate a `phyloseq` object, align sequences and compute the alpha / beta diversities. This step is not stable yet, but alternatively a good ending point could be `snakemake -j{cores} init_phyloseq`
 
+* `snakemake -j{cores} clean` removes everything
+* `snakemake -j{cores} clean_phyloseq` removes only the phyloseq object and diversities
+
 ## Cite
 
 #### dada2
