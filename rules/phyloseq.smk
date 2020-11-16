@@ -15,7 +15,7 @@ rule init_phyloseq:
   input:
     asv="data/asv/seqtab_nochimeras_qc.qs",
     taxa="data/taxonomy/kraken_minikraken2_labels.qs",
-    meta="hsdust_meta.tsv"
+    meta=config["metadata"]
     # tree="data/phyloseq/tree.nwk"
   output:
     sequences="data/phyloseq/asv_sequences.qs",

@@ -22,7 +22,7 @@ seqtab <- qs::qread(snakemake@input[["seqtab"]])
 
 message("filtering samples by negative controls")
 message("using neg. control file ", snakemake@input[["negcontrol"]])
-message("removing counts >= ", snakemake@config[["negctrl_prop"]], 
+message("removing counts >= ", snakemake@config[["negctrl_prop"]],
   " sum(neg_controls)")
 neg_controls <- readr::read_tsv(snakemake@input[["negcontrol"]])
 
