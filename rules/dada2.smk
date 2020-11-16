@@ -3,6 +3,8 @@
 rule plot_quality_profiles:
   input:
     lambda wc: SampleTable[wc.direction].values
+  threads:
+    config["threads"]
   output:
     expand("figures/quality_profiles/{{direction}}/{sample}_{{direction}}.png",sample=SAMPLES)
   # conda:

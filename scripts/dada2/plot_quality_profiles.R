@@ -3,9 +3,14 @@ source("renv/activate.R")
 message("loading dada2")
 library(dada2)
 library(ggplot2)
+library(future)
+library(furrr)
 
 message("making plots")
-plots <- purrr::map(snakemake@input, dada2::plotQualityProfile)
+
+future::plan(future::multiprocess(workers = snakemake@threads / 2))
+
+plots <- furrr::future_map(snakemake@input, dada2::plotQualityProfile)
 
 message("saving plots")
 out <- purrr::map2(
