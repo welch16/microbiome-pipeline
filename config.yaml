@@ -7,6 +7,7 @@
 # general parameters for run
 sampletable: "samples.tsv"
 negcontroltable: "negcontrols.tsv"
+metadata: "meta.tsv"
 
 threads: 32
 

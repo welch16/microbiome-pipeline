@@ -49,19 +49,19 @@ if (snakemake@config[["beta"]] %in% c("bray", "fJaccard", "euclidean",
 # distances[["w_unifrac_norm"]] <- UniFrac(asv_ps, weighted = TRUE,
 # 	normalized = TRUE, parallel = TRUE)
 
-} else if(snakemake@config[["beta"]] == "unifrac") {
+} else if (snakemake@config[["beta"]] == "unifrac") {
 
   distance <- phyloseq::UniFrac(ps, weighted = FALSE, normalized = FALSE,
     parallel = TRUE)
   pcoa <- ape::pcoa(distance)
 
-} else if(snakemake@config[["beta"]] == "w_unifrac") {
+} else if (snakemake@config[["beta"]] == "w_unifrac") {
 
   distance <- phyloseq::UniFrac(ps, weighted = TRUE, normalized = FALSE,
     parallel = TRUE)
   pcoa <- ape::pcoa(distance)
-  
-} else if(snakemake@config[["beta"]] == "w_unifrac_norm") {
+
+} else if (snakemake@config[["beta"]] == "w_unifrac_norm") {
 
   distance <- phyloseq::UniFrac(ps, weighted = TRUE, normalized = TRUE,
     parallel = TRUE)
@@ -69,7 +69,6 @@ if (snakemake@config[["beta"]] %in% c("bray", "fJaccard", "euclidean",
 
 
 }
-
 
 distance %>% qs::qsave(snakemake@output[["distance"]])
 pcoa %>% qs::qsave(snakemake@output[["pcoa"]])
