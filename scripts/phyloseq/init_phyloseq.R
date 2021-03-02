@@ -68,6 +68,7 @@ if (is.null(taxa) & is.null(tree)) {
 meta <- readr::read_tsv(snakemake@input[["meta"]])
 
 meta %<>%
+  dplyr::distinct() %>%
   as.data.frame() %>%
   tibble::column_to_rownames("sample")
 
