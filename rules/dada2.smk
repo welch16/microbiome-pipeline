@@ -1,18 +1,5 @@
 # An example collection of Snakemake rules imported in the main Snakefile.
-
-rule plot_quality_profiles:
-  input:
-    lambda wc: SampleTable[wc.direction].values
-  threads:
-    config["threads"]
-  output:
-    expand("figures/quality_profiles/{{direction}}/{sample}_{{direction}}.png",sample=SAMPLES)
-  # conda:
-  #   "../envs/dada2.yaml"
-  script:
-    "../scripts/dada2/plot_quality_profiles.R"
-
-
+    
 rule filter_and_trim:
   input:
     R1= SampleTable.R1.values,
