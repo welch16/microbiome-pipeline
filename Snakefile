@@ -1,4 +1,5 @@
 import os
+import os.path
 import pandas as pd
 
 configfile: "config.yaml"
@@ -6,7 +7,13 @@ configfile: "config.yaml"
 # SampleTable = pd.read_table("samples2.tsv", index_col = 0)
 SampleTable = pd.read_table(config['sampletable'], index_col=0)
 sample_dict = SampleTable.to_dict('index')
+
 SAMPLES = list(SampleTable.index)
+R1values = list(os.path.basename(sample_dict[sample]["R1"]) for sample in SAMPLES)
+R2values = list(os.path.basename(sample_dict[sample]["R2"]) for sample in SAMPLES)
+allvalues = R1values + R2values
+allvalues = list(value.replace(".fastq.gz","") for value in allvalues)
+
 
 JAVA_MEM_FRACTION=0.85
 CONDAENV ='envs'
@@ -28,8 +35,14 @@ rule all:
     "data/stats/Nreads_dada2.txt",
     "data/asv/seqtab_nochimeras_qc.qs"
 
-rule all_profile:
-    input: expand("figures/quality_profiles/{sample}.png", sample = SAMPLES)
+rule all_qc:
+    input:
+      expand("figures/quality_profiles/{sample}.png", sample = SAMPLES),
+      "data/quality_control/multiqc/multiqc_report.html"
+rule clean_qc:
+  shell:
+    "rm -fr data/quality_control"
+
 
 rule all_taxonomy_kraken:
   input:
