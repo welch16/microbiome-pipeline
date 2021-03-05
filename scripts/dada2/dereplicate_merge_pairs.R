@@ -79,7 +79,7 @@ get_nreads <- function(x) sum(dada2::getUniques(x))
 
 track <- cbind(
     sapply(dada_fwd, get_nreads), sapply(mergers, get_nreads))
-colnames(track) <- c( "denoised", "merged")
+colnames(track) <- c("denoised", "merged")
 
 track %>%
   as.data.frame() %>%
