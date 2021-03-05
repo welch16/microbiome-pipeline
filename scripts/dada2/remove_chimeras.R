@@ -12,12 +12,12 @@ library(magrittr)
 library(dada2)
 library(qs)
 
-seqtab.all <- qs::qread(snakemake@input[["seqtab"]])
+seqtab_all <- qs::qread(snakemake@input[["seqtab"]])
 
 # Remove chimeras
 message("removing chimeras")
 seqtab <- dada2::removeBimeraDenovo(
-  seqtab.all,
+  seqtab_all,
   method = snakemake@config[["chimera_method"]],
   minSampleFraction = snakemake@config[["minSampleFraction"]],
   ignoreNNegatives = snakemake@config[["ignoreNNegatives"]],
