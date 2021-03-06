@@ -21,45 +21,10 @@ library(magrittr)
 library(dada2)
 library(qs)
 
-
-filter_fwd <- snakemake@input[["R1"]]
-filter_bwd <- snakemake@input[["R2"]]
-
+derep_files <- snakemake@input[["derep"]]
 sample.names <- snakemake@params[["samples"]]
 
-message("loading error rates")
-err_fwd <- qs::qread(snakemake@input[["errR1"]])
-err_bwd <- qs::qread(snakemake@input[["errR2"]])
-
-message("dereplicating filtered files")
-
-dereplicate_merge <- function(sample, filtfwd, filtbwd, err_fwd, err_bwd,
-  threads = 4, min_overlap = 12, max_mismatch = 0) {
-
-  message("processing ", sample)
-  derep_fwd <- dada2::derepFastq(filtfwd)
-  dd_fwd <- dada2::dada(derep_fwd, err = err_fwd, multithread = threads)
-
-  derep_bwd <- dada2::derepFastq(filtbwd)
-  dd_bwd <- dada2::dada(derep_bwd, err = err_bwd, multithread = threads)
-
-  merge <- dada2::mergePairs(dd_fwd, derep_fwd, dd_bwd, derep_bwd,
-      minOverlap = min_overlap, maxMismatch = max_mismatch)
-
-  out <- list(
-    "dada_fwd" = dd_fwd,
-    "dada_bwd" = dd_bwd,
-    "merge" = merge)
-
-  return(out)
-}
-
-derep_mergers <- purrr::pmap(
-  list(sample.names, filter_fwd, filter_bwd),
-  dereplicate_merge, err_fwd, err_bwd,
-  threads = snakemake@threads,
-  min_overlap = snakemake@config[["minOverlap"]],
-  max_mismatch = snakemake@config[["maxMismatch"]])
+derep_mergers <- purrr::map(derep_files, qs::qread)
 
 mergers <- purrr::map(derep_mergers, "merge")
 names(mergers) <- sample.names

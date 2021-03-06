@@ -22,8 +22,8 @@ rule filter_and_trim:
 
 rule learn_error_rates:
   input:
-    R1= rules.filter_and_trim.output.R1,
-    R2= rules.filter_and_trim.output.R2
+    R1 = rules.filter_and_trim.output.R1,
+    R2 = rules.filter_and_trim.output.R2
   output:
     errR1 = "data/model/error_rates_R1.qs",
     errR2 = "data/model/error_rates_R2.qs",
@@ -38,13 +38,22 @@ rule learn_error_rates:
   script:
     "../scripts/dada2/learn_error_rates.R"
 
+rule dereplicate_single:
+  input:
+    R1 = "data/filtered/{sample}_R1.fastq.gz",
+    R2 = "data/filtered/{sample}_R2.fastq.gz",
+    errR1 = rules.learn_error_rates.output.errR1,
+    errR2 = rules.learn_error_rates.output.errR2
+  output:
+    merge = temp("data/mergers/{sample}_asv.qs")
+  log:
+    "logs/dada2/{sample}_merge.txt"
+  script:
+    "../scripts/dada2/dereplicate_one_sample_pair.R"
 
 rule dereplicate:
   input:
-    R1 = rules.filter_and_trim.output.R1,
-    R2 = rules.filter_and_trim.output.R2,
-    errR1 = rules.learn_error_rates.output.errR1,
-    errR2 = rules.learn_error_rates.output.errR2
+    derep = expand("data/mergers/{sample}_asv.qs", sample = SAMPLES)
   output:
     seqtab = temp("data/asv/seqtab_with_chimeras.qs"),
     nreads = temp("data/stats/Nreads_dereplicated.txt")
@@ -53,11 +62,9 @@ rule dereplicate:
   threads:
     config["threads"]
   log:
-    "logs/dada2/dereplicate.txt"
+    "logs/dada2/dereplicate_samples.txt"
   script:
-    "../scripts/dada2/dereplicate_merge_pairs.R"
-#     conda:
-#         "../envs/dada2.yaml"
+    "../scripts/dada2/gather_derep_seqtab.R"
 
 
 rule remove_chimeras:
