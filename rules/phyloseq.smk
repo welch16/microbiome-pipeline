@@ -35,7 +35,7 @@ rule normalize:
 
 rule alpha_div:
   input:
-    phyloseq="data/phyloseq/asv_phyloseq_norm.qs"
+    phyloseq="data/phyloseq/asv_phyloseq.qs"
   output:
     alpha="data/phyloseq/div/alphadiv.qs"
   log:
