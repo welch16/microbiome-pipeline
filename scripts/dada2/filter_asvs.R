@@ -57,8 +57,22 @@ subtract_neg_control <- function(name, neg_controls, seqtab, prop) {
 }
 
 neg_controls %<>%
-  dplyr::mutate(sample_vec = purrr::map2(name, negs, subtract_neg_control,
+  dplyr::mutate(sample_vec = purrr::map2(name, negs,
+    safely(subtract_neg_control),
     seqtab, snakemake@config[["negctrl_prop"]]))
+
+to_remove <- dplyr::filter(neg_controls,
+  purrr::map_lgl(sample_vec, ~ !is.null(.$error)))
+
+if (nrow(to_remove) > 0) {
+  message("removed the samples:\n",
+    stringr::str_c(to_remove$name, collapse = "\n"))
+}
+
+neg_controls %<>%
+  dplyr::filter(purrr::map_lgl(sample_vec, ~ is.null(.$error))) %>%
+  dplyr::mutate(
+    sample_vec = purrr::map(sample_vec, "result"))
 
 sample_names <- neg_controls %>%
   dplyr::pull(name)
@@ -69,7 +83,7 @@ seqtab_samples %<>%
   as.matrix() %>%
   set_rownames(sample_names)
 
-seqtab_nc <- seqtab[! rownames(seqtab) %in% sample_names,]
+seqtab_nc <- seqtab[! rownames(seqtab) %in% sample_names, ]
 seqtab_new <- rbind(seqtab_samples, seqtab_nc)
 
 # Length of sequences
@@ -141,7 +155,7 @@ seqtab_abundance <- colSums(seqtab_new)
 
 message("removing ASV with < ", min_reads_per_asv, " reads")
 message("in total ", sum(seqtab_abundance < min_reads_per_asv))
-seqtab_new <- seqtab_new[ ,seqtab_abundance >= min_reads_per_asv]
+seqtab_new <- seqtab_new[, seqtab_abundance >= min_reads_per_asv]
 
 
 message("saving files in ", snakemake@output[["seqtab_filt"]])
