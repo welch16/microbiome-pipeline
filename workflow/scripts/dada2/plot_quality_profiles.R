@@ -1,30 +1,53 @@
+#!/usr/local/bin/Rscript
 
-source("renv/activate.R")
-message("loading dada2")
-library(dada2)
-library(ggplot2)
-library(purrr)
-library(cowplot)
+"Plot quality profiles
 
-log_file <- file(snakemake@log[[1]], open = "wt")
+Usage:
+  plot_quality_profiles.R <plot_file> --end1=<end1> --end2=<end2> [--logfile=<logfile>]
+  plot_quality_profiles.R (-h|--help)
+  plot_quality_profiles.R --version" -> doc
+
+library(docopt)
+
+my_args <- commandArgs(trailingOnly = TRUE)
+
+if (length(my_args) == 0) {
+  my_args <- c("qc_profile.png", "--end1=end1.fastq.gz",
+    "--end2=end2.fastq.gz")
+}
+
+arguments <- docopt(doc, args = my_args,
+  version = "plot_quality_profiles V1")
+print(arguments)
+
+if (is.null(arguments$logfile)) {
+  arguments$logfile <- "./plot_quality_profiles.log"
+}
+
+log_file <- file(arguments$logfile, open = "wt")
 sink(log_file)
 sink(log_file, type = "message")
-info <- Sys.info();
-print(info)
+
+message("system info")
+print(Sys.info())
+
+message("arguments")
+print(arguments)
+
+stopifnot(file.exists(arguments$end1), file.exists(arguments$end2))
+
+message("loading R packages")
+library(dada2, quietly = TRUE)
+library(ggplot2, quietly = TRUE)
+library(purrr, quietly = TRUE)
+library(cowplot, quietly = TRUE)
+
 message("making plots")
-
-
-# TODO: make a better split, because is trying to save in memory too many plots
 
 plot_fun <- purrr::safely(dada2::plotQualityProfile)
 
-ss <- readr::read_tsv("samples2.tsv")
-
-r1_plot <- plot_fun(snakemake@input[1])
-r2_plot <- plot_fun(snakemake@input[2])
-
-# r1_plot <- plot_fun(ss$R1[1])
-# r2_plot <- plot_fun(ss$R2[1])
+r1_plot <- plot_fun(arguments$end1)
+r2_plot <- plot_fun(arguments$end2)
 
 if (is.null(r1_plot$error)) {
   r1_plot <- r1_plot$result
@@ -43,7 +66,7 @@ if (is.null(r2_plot$error)) {
 message("saving plots")
 final_plot <- cowplot::plot_grid(r1_plot, r2_plot, nrow = 1)
 
-ggsave(filename = snakemake@output[[1]], final_plot, ggsave, width = 8,
+ggsave(filename = arguments$plot_file, final_plot, ggsave, width = 8,
   height = 4, units = "in")
 
 sink(type = "message")
