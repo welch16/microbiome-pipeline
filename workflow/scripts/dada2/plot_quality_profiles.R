@@ -1,13 +1,22 @@
 #!/usr/local/bin/Rscript
+#' plot dada2's quality profiles for the pair of samples
+#' @param plot_file the name of file where the plot is saved
+#' @param end1 the name of the R1 end file for the 16S sample
+#' @param end2 the name of the R2 end file for the 16S sample
+#' @author rwelch2
 
 "Plot quality profiles
-
 Usage:
-  plot_quality_profiles.R <plot_file> --end1=<end1> --end2=<end2> [--logfile=<logfile>]
+  plot_quality_profiles.R [<plot_file>] [--end1=<end1> --end2=<end2>] [--log=<logfile>]
   plot_quality_profiles.R (-h|--help)
-  plot_quality_profiles.R --version" -> doc
+  plot_quality_profiles.R --version
 
-library(docopt)
+Options:
+-h --help    show this screen
+--end1=<end1>    name of the R1 end fastq.gz file
+--end2=<end2>    name of the R2 end fastq.gz file
+--log=<logfile>    name of the log file [default: plot_quality_profiles.log]
+" -> doc
 
 my_args <- commandArgs(trailingOnly = TRUE)
 
@@ -16,15 +25,12 @@ if (length(my_args) == 0) {
     "--end2=end2.fastq.gz")
 }
 
-arguments <- docopt(doc, args = my_args,
-  version = "plot_quality_profiles V1")
+library(docopt, quietly = TRUE)
+
+arguments <- docopt(doc, args = my_args, version = "plot_quality_profiles V1\n")
 print(arguments)
 
-if (is.null(arguments$logfile)) {
-  arguments$logfile <- "./plot_quality_profiles.log"
-}
-
-log_file <- file(arguments$logfile, open = "wt")
+log_file <- file(arguments$log, open = "wt")
 sink(log_file)
 sink(log_file, type = "message")
 
