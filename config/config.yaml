@@ -12,20 +12,43 @@ metadata: "meta.tsv"
 threads: 32
 
 
+test:
+  - batch1: 12
+  - batch2: 12
+  - batch3: 14
+
 # dada2 filter and trim
-truncQ: 12
-truncLen:
-  - 280
-  - 250
-trimLeft: 0
-trimRight: 0
-maxLen: Inf
-minLen: 100
-maxN: 0
-minQ: 0
-maxEE:
-  - 2
-  - 2
+filter_and_trim:
+  batch1:
+    truncQ: 12
+    truncLen: [280, 250]
+    trimLeft: 0
+    trimRight: 0
+    maxLen: Inf
+    minLen: 100
+    maxN: 0
+    minQ: 0
+    maxEE: [2, 2]
+  batch2:
+    truncQ: 14
+    truncLen: [280, 250]
+    trimLeft: 0
+    trimRight: 3
+    maxLen: Inf
+    minLen: 100
+    maxN: 0
+    minQ: 0
+    maxEE: [2, 2]
+  batch3:
+    truncQ: 23
+    truncLen: [280, 260]
+    trimLeft: 0
+    trimRight: 0
+    maxLen: Inf
+    minLen: 100
+    maxN: 0
+    minQ: 0
+    maxEE: [2, 3]
 
 # dada2 learn error rates
 learn_nbases: 100e6

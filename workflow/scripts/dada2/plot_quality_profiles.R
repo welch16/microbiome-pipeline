@@ -6,10 +6,11 @@
 #' @author rwelch2
 
 "Plot quality profiles
+
 Usage:
-  plot_quality_profiles.R [<plot_file>] [--end1=<end1> --end2=<end2>] [--log=<logfile>]
-  plot_quality_profiles.R (-h|--help)
-  plot_quality_profiles.R --version
+plot_quality_profiles.R [<plot_file>] [--end1=<end1> --end2=<end2>] [--log=<logfile>]
+plot_quality_profiles.R (-h|--help)
+plot_quality_profiles.R --version
 
 Options:
 -h --help    show this screen
