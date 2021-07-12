@@ -39,6 +39,7 @@ library(magrittr)
 library(dada2)
 library(qs)
 library(yaml)
+library(fs)
 
 stopifnot(file.exists(arguments$config),
   file.exists(arguments$end1), file.exists(arguments$end2))
@@ -48,6 +49,9 @@ config <- yaml::read_yaml(arguments$config)$filter_and_trim
 print(config)
 
 if (arguments$batch %in% names(config)) config <- config[[arguments$batch]]
+
+fs::dir_create(unique(dirname(arguments$filter_end1)))
+fs::dir_create(unique(dirname(arguments$filter_end2)))
 
 track_filt <- dada2::filterAndTrim(
   arguments$end1, arguments$filter_end1,
