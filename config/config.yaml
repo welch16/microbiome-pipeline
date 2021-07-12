@@ -51,8 +51,14 @@ filter_and_trim:
     maxEE: [2, 3]
 
 # dada2 learn error rates
-learn_nbases: 100e6
-
+error_rates:
+  batch1:
+    learn_nbases: 100e6
+  batch2:
+    learn_nbases: 100e6
+  batch3:
+    learn_nbases: 100e6
+    
 # dada2 merge pairs
 minOverlap: 50
 maxMismatch: 0
