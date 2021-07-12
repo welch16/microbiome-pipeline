@@ -78,3 +78,5 @@ ggsave(filename = arguments$plot_file, final_plot, ggsave, width = 8,
 
 sink(type = "message")
 sink()
+
+close(log_file)
