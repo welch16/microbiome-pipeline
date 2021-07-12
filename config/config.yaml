@@ -60,8 +60,16 @@ error_rates:
     learn_nbases: 100e6
     
 # dada2 merge pairs
-minOverlap: 50
-maxMismatch: 0
+merge_pairs:
+  batch1:
+    minOverlap: 50
+    maxMismatch: 0
+  batch2:
+    minOverlap: 50
+    maxMismatch: 0
+  batch3:
+    minOverlap: 50
+    maxMismatch: 0    
 
 # dada2 remove chimeras
 minSampleFraction: 0.9

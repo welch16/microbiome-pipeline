@@ -1,8 +1,13 @@
 #!/usr/local/bin/Rscript
 
-#' Wrapper around `dada2::filterAndTrim function
+#' Wrapper around `dada2::filterAndTrim` function
 #' For details on the meaning of the parameters use
-#' R -e `?dada2::filterAndTrim`
+#' R -e '?dada2::filterAndTrim'
+#' @param filter_end1 name of the output end1 file
+#' @param filter_end2 name of the output end2 file
+#' @param summary_file name of the file where the summary is saved
+#' @param sample_name name of the sample
+#' @author rwelch2
 
 "Filter and trim
 
@@ -48,7 +53,10 @@ print(stringr::str_c(names(info), " : ", info, "\n"))
 config <- yaml::read_yaml(arguments$config)$filter_and_trim
 print(config)
 
-if (arguments$batch %in% names(config)) config <- config[[arguments$batch]]
+if (!is.null(arguments$batch)) {
+  stopifnot(arguments$batch %in% names(config))
+  config <- config[[arguments$batch]]
+}
 
 fs::dir_create(unique(dirname(arguments$filter_end1)))
 fs::dir_create(unique(dirname(arguments$filter_end2)))

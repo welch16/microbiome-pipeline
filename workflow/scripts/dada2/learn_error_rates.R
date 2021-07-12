@@ -1,11 +1,10 @@
 #!/usr/local/bin/Rscript
 
-#' Wrapper around `dada2::learnErrors function
+#' Wrapper around `dada2::learnErrors` function
 #' For details on the meaning of the parameters use
-#' R -e `?dada2::learnErrors`
-
-#' Assumes that we have paired end files, therefore, we learn two error rates
-#' matrices, i.e. one for each end.
+#' R -e '?dada2::learnErrors'
+#' @param filtered name of filtered files
+#' @author rwelch2
 
 "Learn error rates
 
@@ -50,7 +49,10 @@ library(fs)
 config <- yaml::read_yaml(arguments$config)$error_rates
 print(config)
 
-if (arguments$batch %in% names(config)) config <- config[[arguments$batch]]
+if (!is.null(arguments$batch)) {
+  stopifnot(arguments$batch %in% names(config))
+  config <- config[[arguments$batch]]
+}
 
 print("computing error rates")
 errs <- dada2::learnErrors(
