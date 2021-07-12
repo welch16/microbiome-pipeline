@@ -52,6 +52,7 @@ print(config)
 
 if (arguments$batch %in% names(config)) config <- config[[arguments$batch]]
 
+print("computing error rates")
 errs <- dada2::learnErrors(
   arguments$filtered, nbases = as.numeric(config$learn_nbases),
   multithread = as.numeric(arguments$cores), randomize = TRUE)
@@ -59,6 +60,7 @@ errs <- dada2::learnErrors(
 fs::dir_create(dirname(arguments$error_rates))
 qs::qsave(errs, file = arguments$error_rates)
 
+print("plotting diagnostics")
 err_plot <- dada2::plotErrors(errs, nominalQ = TRUE)
 
 fs::dir_create(dirname(arguments$plot_file))
@@ -68,3 +70,5 @@ ggplot2::ggsave(
   width = 20,
   height = 20,
   units = "cm")
+
+close(log_file)

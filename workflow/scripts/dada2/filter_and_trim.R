@@ -76,3 +76,5 @@ track_filt %>%
   as.data.frame() %>%
   tibble::as_tibble(rownames = "samples") %>%
   readr::write_tsv(arguments$summary_file)
+
+close(log_file)
