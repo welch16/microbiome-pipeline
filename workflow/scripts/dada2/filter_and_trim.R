@@ -7,7 +7,7 @@
 "Filter and trim
 
 Usage:
-filter_and_trim.R [<filter_end1> <filter_end2> <summary_file>] [<sample_name> --end1=<end1> --end2=<end2>] [--log=<logfile> --batch=<batch> --config=<cfile> --cores=<cores>]
+filter_and_trim.R [<filter_end1> <filter_end2> <summary_file>] [<sample_name> --end1=<end1> --end2=<end2>] [--log=<logfile> --batch=<batch> --config=<cfile>]
 filter_and_trim.R (-h|--help)
 filter_and_trim.R --version
 
@@ -17,15 +17,13 @@ Options:
 --end2=<end2>    name of the R2 end fastq.gz file
 --log=<logfile>    name of the log file [default: filter_and_trim.log]
 --batch=<batch>    name of the batch if any to get the filter and trim parameters
---config=<cfile>    name of the yaml file with the parameters [default: ./config/config.yaml]
---cores=<cores>    number of CPUs for parallel processing [default: 4]" -> doc
+--config=<cfile>    name of the yaml file with the parameters [default: ./config/config.yaml]" -> doc
 
 library(docopt)
 
 my_args <- commandArgs(trailingOnly = TRUE)
 
 arguments <- docopt::docopt(doc, args = my_args, version = "filter_and_trim V1")
-arguments$cores <- as.numeric(arguments$cores)
 
 
 log_file <- file(arguments$log, open = "wt")
@@ -51,8 +49,7 @@ print(config)
 
 if (arguments$batch %in% names(config)) config <- config[[arguments$batch]]
 
-
-track.filt <- dada2::filterAndTrim(
+track_filt <- dada2::filterAndTrim(
   arguments$end1, arguments$filter_end1,
   arguments$end2, arguments$filter_end2,
   truncQ =    as.numeric(config[["truncQ"]]),
@@ -66,12 +63,12 @@ track.filt <- dada2::filterAndTrim(
   maxEE =     as.numeric(config[["maxEE"]]),
   rm.phix = TRUE,
   compress = TRUE,
-  multithread = arguments$cores)
+  multithread = FALSE)
 
-row.names(track.filt) <- arguments$sample_name
-colnames(track.filt) <- c("raw", "filtered")
+row.names(track_filt) <- arguments$sample_name
+colnames(track_filt) <- c("raw", "filtered")
 
-track.filt %>%
+track_filt %>%
   as.data.frame() %>%
   tibble::as_tibble(rownames = "samples") %>%
-readr::write_tsv(arguments$summary_file)
+  readr::write_tsv(arguments$summary_file)
