@@ -32,7 +32,6 @@ arguments <- docopt::docopt(doc, args = my_args, version = "filter_and_trim V1")
 
 
 log_file <- file(arguments$log, open = "wt")
-sink(log_file)
 sink(log_file, type = "message")
 
 print(arguments)

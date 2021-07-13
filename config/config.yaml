@@ -72,19 +72,23 @@ merge_pairs:
     maxMismatch: 0    
 
 # dada2 remove chimeras
-minSampleFraction: 0.9
-ignoreNNegatives: 1
-minFoldParentOverAbundance: 1.5
-allowOneOf: FALSE
-minOneOffParentDistance: 4
-maxShift: 16
-chimera_method: "consensus"
+remove_chimeras:
+  minSampleFraction: 0.9
+  ignoreNNegatives: 1
+  minFoldParentOverAbundance: 1.5
+  allowOneOf: FALSE
+  minOneOffParentDistance: 4
+  maxShift: 16
+  chimera_method: "consensus"    
 
 # qc parameters
-negctrl_prop: 0.5 # proportion of negative control reads to be subtracted from sample reads vectors
-max_length_variation: 50 # bps can a sequence be longer or shorter than the mode sequence length
-low_abundance_perc: 0.0001 # min percentage of total_reads in an ASV
-
+# negctrl_prop: proportion of negative control reads to be subtracted from sample reads vectors
+# max_length_variation: bps can a sequence be longer or shorter than the mode sequence length
+# low_abundance_perc: min percentage of total_reads in an ASV
+qc_parameters:
+  negctrl_prop: 0.5
+  max_length_variation: 50
+  low_abundance_perc: 0.0001
 
 # can be downloaded from https://benlangmead.github.io/aws-indexes/k2
 kraken_dbs: 
